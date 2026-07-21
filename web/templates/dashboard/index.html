@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="author" content="schub.typeslint.com"/>
+    <meta name="title" content="schub.typeslint.com"/>
+    <meta name="description" content="ScHub"/>
+    <meta name="theme-color" content="#000000"/>
+    <title>Dashboard</title>
+    <style>
+        body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f5f6fa;
+        color: #2f3640;
+        padding: 50px;
+        width: 20rem;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        }
+        p {
+        font-size: 1.1rem;
+        }
+        nav a {
+        margin: 0 15px;
+        color: #0984e3;
+        text-decoration: none;
+        font-weight: bold;
+        }
+        nav a:hover {
+        text-decoration: underline;
+        }
+        div.navbar p a {
+            margin-right: 12px;
+        }
+
+        #loaderBackground {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 99;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 1000dvh;
+            width: 1000dvw;
+            visibility: hidden;
+        }
+
+        .loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            height: 5px;
+            width: 5px;
+            color: #006aff;
+            box-shadow: -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px;
+            animation: loader-38 6s infinite;
+        }
+
+        @keyframes loader-38 {
+            0% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+            8.33% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px -10px 0 5px;
+            }
+            16.66% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px;
+            }
+            24.99% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            33.32% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+            41.65% {
+                box-shadow: 10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px -10px 0 5px;
+            }
+            49.98% {
+                box-shadow: 10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px;
+            }
+            58.31% {
+                box-shadow: -10px 10px 0 5px,
+                    -10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            66.64% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            74.97% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            83.3% {
+                box-shadow: -10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            91.63% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px 10px 0 5px,
+                    -10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            100% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loaderBackground">
+        <span class="loader"></span>
+    </div>
+
+    <div class="navbar">
+        <p>
+            {{ if gt (len .platform) 0 }}
+                <a href="/post" target="_blank">Post</a>
+                <a href="/comment" target="_blank">Comment</a>
+            {{ end }}
+            <a href="/account" target="_blank">Account</a>
+            <button onclick="logout()">Logout</button>
+        </p>
+    </div>
+    <h1>Dashboard</h1>
+    <br>
+    {{ if gt (len .platform) 0 }}
+    <form id="uploadForm" action="" onsubmit="uploadPost(); return false" enctype="multipart/form-data">
+        <textarea name="title" id="title" placeholder="..." style="height: 144px; width: 240px;" required></textarea>
+        <br><br>
+        <input type="file" name="file" id="file" accept="video/mp4"/>
+        <br><br>
+        <p style="text-align: left;">
+            {{ range .platform }}
+                <input type="checkbox" id="{{ . | toLower }}" name="{{ . | toLower }}" value="{{ . | toLower }}">
+                <label for="{{ . | toLower }}"> {{ . }}</label>
+            {{ end }}
+        </p>
+        <br><br>
+    </form>
+    <button onclick="uploadPost();" type="submit">Post</button>
+    {{ else }}
+    <a href="/account"><button style="cursor: pointer;">Connect account</button></a>
+    {{ end }}
+</body>
+<script>
+    async function uploadPost() {
+        document.getElementById("loaderBackground").style.visibility = "visible";
+        const title = document.getElementById("title").value;
+        const fileInput = document.getElementById("file");
+        const formData = new FormData();
+
+        formData.append("title", title);
+
+        if (fileInput.files.length > 0) {
+            formData.append("file", fileInput.files[0]);
+        }
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        const platform = Array.from(checkboxes).map((i) => i.id);
+
+        const url = platform.length > 0 ? `${window.location.protocol}api/v1/post?platform=${platform.join(",")}` : `${window.location.protocol}api/v1/post`;
+        console.log(url);
+
+        await fetch(url, {
+            method: "POST",
+            body: formData,
+            credentials: "include"
+        }).then(async (res) => {
+            console.log(res.json());
+            if (res.status == 201) {
+                document.getElementById("loaderBackground").style.visibility = "hidden";
+                alert("Upload Successful");
+                document.getElementById("title").value = "";
+                fileInput.value = "";
+                return window.location.reload();
+            }
+
+            
+            alert("Error");
+            document.getElementById("title").value = "";
+            fileInput.value = "";
+            return;
+        });
+    }
+
+    async function logout() {
+        if (window.confirm("Logout?")) {
+            return await fetch(`${window.location.origin}/v1/logout`, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            }).then(async (res) => {
+                if (res.status !== 302) {
+                    return alert("Error");
+                }
+
+                return window.location.href = `${window.location.origin}/login`;
+            });
+        }
+
+        return;
+    }
+</script>
+</html>

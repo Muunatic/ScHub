@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="schub.typeslint.com" />
+    <meta name="title" content="schub.typeslint.com" />
+    <meta name="description" content="ScHub" />
+    <meta name="theme-color" content="#000000" />
+    <title>Comment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f6fa;
+            color: #2f3640;
+            padding: 20px;
+            margin: 0;
+        }
+
+        #loaderBackground {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            z-index: 99;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 1000dvh;
+            width: 1000dvw;
+            visibility: hidden;
+        }
+
+        .loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            height: 5px;
+            width: 5px;
+            color: #006aff;
+            box-shadow: -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px,
+                -10px -10px 0 5px;
+            animation: loader-38 6s infinite;
+        }
+
+        @keyframes loader-38 {
+            0% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+            8.33% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px -10px 0 5px;
+            }
+            16.66% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px;
+            }
+            24.99% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            33.32% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+            41.65% {
+                box-shadow: 10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px -10px 0 5px;
+            }
+            49.98% {
+                box-shadow: 10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px;
+            }
+            58.31% {
+                box-shadow: -10px 10px 0 5px,
+                    -10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            66.64% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            74.97% {
+                box-shadow: -10px -10px 0 5px,
+                    10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            83.3% {
+                box-shadow: -10px -10px 0 5px,
+                    10px 10px 0 5px,
+                    10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            91.63% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px 10px 0 5px,
+                    -10px 10px 0 5px,
+                    -10px 10px 0 5px;
+            }
+            100% {
+                box-shadow: -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px,
+                    -10px -10px 0 5px;
+            }
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-word;
+            white-space: normal;
+            overflow-wrap: break-word;
+        }
+
+        .card p {
+            margin: 4px 0;
+            font-size: 14px;
+        }
+
+        .card a {
+            color: #0984e3;
+            word-break: break-all;
+        }
+
+        @media (min-width: 768px) {
+            .card-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .card {
+                width: calc(50% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loaderBackground">
+        <span class="loader"></span>
+    </div>
+
+    <div class="navbar">
+        <p>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/post">Post</a>
+            <a href="/comment">Comment</a>
+            <a href="/account">Account</a>
+        </p>
+    </div>
+
+    <h1>Comments</h1>
+
+    <div>
+        <label for="platform">Platform</label>
+        <select name="platform" id="platform">
+            <option selected value="any">All</option>
+            {{ range .platform }}
+                <option value="{{ . | toLower }}">{{ . }}</option>
+            {{ end }}
+        </select>
+
+        <label for="sortby">Sort By</label>
+        <select name="sortby" id="sortby">
+            <option selected value="any">All</option>
+            <option value="content">Content Name</option>
+            <option value="likes">Number of Likes</option>
+            <option value="createdAt">Date Created</option>
+        </select>
+
+        <label for="sort">Order</label>
+        <select name="sort" id="sort">
+            <option selected value="asc">Ascending (A-Z / Smallest)</option>
+            <option value="desc">Descending (Z-A / Largest)</option>
+        </select>
+
+        <button id="getdata" onclick="getData();">Apply</button>
+    </div>
+    <br>
+    <br>
+    <div class="card-container">
+        {{ $data := index .data "data" }}
+        {{ range $i := $data }}
+            {{ $content := index $i "content" }}
+            {{ $likes := index $i "likes" }}
+            {{ $createdAt := index $i "createdAt" }}
+            {{ $platform := index $i "platform" }}
+            {{ $postContent := index $i "postContent" }}
+            {{ $postAttachment := index $i "postAttachment" }}
+            <div class="card">
+                <h3>{{ if $content }}{{ $content }}{{ else }}(No title){{ end }}</h3>
+                <p><strong>Comment on Post:</strong>
+                    <a href="{{ $postAttachment }}" target="_blank">{{ $postContent }}</a>
+                </p>
+                <p><strong>Likes:</strong> {{ $likes }}</p>
+                <p><strong>Date Created:</strong> {{ $createdAt | formatDate }}</p>
+                <p><strong>Platform:</strong> {{ $platform }}</p>
+            </div>
+        {{ end }}
+    </div>
+</body>
+<script>
+    async function getData() {
+        const platform = document.getElementById("platform").value;
+        const sort = document.getElementById("sort").value;
+        const sortBy = document.getElementById("sortby").value;
+
+        document.getElementById("loaderBackground").style.visibility = "visible";
+        window.location.href = `${origin}/comment?sortby=${sortBy}&sort=${sort}${platform === "any" ? "" : `&platform=${platform}`}`;
+    }
+</script>
+</html>

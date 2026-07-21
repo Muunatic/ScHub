@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="author" content="schub.typeslint.com"/>
+    <meta name="title" content="schub.typeslint.com"/>
+    <meta name="description" content="ScHub"/>
+    <title>Verify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .verify-container {
+            background: white;
+            padding: 20px;
+            border: 1px solid #dbdbdb;
+            text-align: center;
+            width: 300px;
+        }
+        input {
+            max-width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+        }
+        .verify-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #3897f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .verify-btn:hover {
+            background-color: #2673c9;
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <h1>Verify</h1>
+        <input type="password" id="password" placeholder="Password">
+        <br>
+        <button class="verify-btn" onclick="verify()">Submit</button>
+    </div>
+</body>
+<script>
+    async function verify() {
+        const password = document.getElementById('password').value;
+
+        const response = await fetch('/v1/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert('Verify successful!');
+            return window.location.href = "/";
+        } else {
+            alert('Verify failed: ' + data.message);
+        }
+    }
+</script>
+</html>

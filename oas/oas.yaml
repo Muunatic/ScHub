@@ -1,0 +1,363 @@
+openapi: 3.0
+info:
+  title: Social Media Integration API
+  version: 0.1.0
+  description: API for managing posts and comments in a social media integration.
+  contact:
+    email: muunatic@typeslint.com
+servers:
+  - url: https://schub.typeslint.com/api/v1
+
+paths:
+  /post:
+    get:
+      summary: Get all posts
+      tags: [Post]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: sort
+          description: |
+            Sort direction:
+            - `desc`: Sort from highest to lowest
+            - `asc`: Sort from lowest to highest
+
+            ⚠️ Required when using the sortby parameter with value `name`, `likes`, or `createdAt`.
+          schema:
+            type: string
+            enum: [desc, asc]
+        - in: query
+          name: sortby
+          description: |
+            List of columns to sort by.
+
+            Supported values:
+            - `name`
+            - `likes`
+            - `createdAt`
+
+            Example: `sortby=createdAt`
+          schema:
+            type: string
+          example: createdAt
+      responses:
+        "200":
+          description: List of all posts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Post"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                BadRequest:
+                  value:
+                    status: 400
+                    message: Bad Request
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Unauthorized:
+                  value:
+                    status: 401
+                    message: Unauthorized
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Not Found:
+                  value:
+                    status: 404
+                    message: Not Found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Internal Server Error:
+                  value:
+                    status: 500
+                    message: Internal Server Error
+
+    post:
+      summary: Upload a new post
+      tags: [Post]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: platform
+          description: Target platform
+          schema:
+            type: string
+          example: "youtube,tiktok,twitter"
+          required: true
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              required: [content, file, accountId]
+              type: object
+              properties:
+                content:
+                  type: string
+                  example: Try the Secret Recipe at XYZ Coffee
+                file:
+                  type: string
+                  format: binary
+                accountId:
+                  type: string
+                  format: uuid
+                  example: "1d08d1ae-6b10-4a3e-a6bc-e7a4e69fc2b2"
+      responses:
+        "201":
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Created
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                BadRequest:
+                  value:
+                    status: 400
+                    message: Bad Request
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Unauthorized:
+                  value:
+                    status: 401
+                    message: Unauthorized
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Not Found:
+                  value:
+                    status: 404
+                    message: Not Found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Internal Server Error:
+                  value:
+                    status: 500
+                    message: Internal Server Error
+
+  /comment:
+    get:
+      summary: Get all comments
+      tags: [Comment]
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: sort
+          description: |
+            Sort direction:
+            - `desc`: Sort from highest to lowest
+            - `asc`: Sort from lowest to highest
+
+            ⚠️ Required when using the sortby parameter with value `name`, `likes`, or `createdAt`.
+          schema:
+            type: string
+            enum: [desc, asc]
+        - in: query
+          name: sortby
+          description: |
+            List of columns to sort by.
+
+            Supported values:
+            - `name`
+            - `likes`
+            - `createdAt`
+
+            Example: `sortby=createdAt`
+          schema:
+            type: string
+          example: createdAt
+      responses:
+        "200":
+          description: List of all comments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Comment"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                BadRequest:
+                  value:
+                    status: 400
+                    message: Bad Request
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Unauthorized:
+                  value:
+                    status: 401
+                    message: Unauthorized
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Not Found:
+                  value:
+                    status: 404
+                    message: Not Found
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              examples:
+                Internal Server Error:
+                  value:
+                    status: 500
+                    message: Internal Server Error
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "1d08d1ae-6b10-4a3e-a6bc-e7a4e69fc2b2"
+        externalId:
+          type: string
+          example: "11748280935434968342"
+        content:
+          type: string
+          example: Try the Secret Recipe at XYZ Coffee
+        attachment:
+          type: string
+          example: http://localhost:8080/uploads/promotion.jpg
+        likes:
+          type: integer
+          example: 0
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-05-11T10:00:00Z
+        accountId:
+          type: string
+          format: uuid
+          example: "f243cdda-0f88-43fc-9f15-3b442fbf1990"
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "70f8c79a-cccf-4ac4-8a04-bd1c0796c5e1"
+        externalId:
+          type: string
+          example: "58231848178321489123479"
+        postId:
+          type: string
+          format: uuid
+          example: "1d08d1ae-6b10-4a3e-a6bc-e7a4e69fc2b2"
+        accountId:
+          type: string
+          format: uuid
+          example: "f243cdda-0f88-43fc-9f15-3b442fbf1990"
+        content:
+          type: string
+          example: Great!
+        likes:
+          type: integer
+          example: 0
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-05-11T11:00:00Z
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
