@@ -68,7 +68,7 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(middleware.LogMiddleware())
-	r.Use(authMiddleware.VerifyMiddleware())
+	// r.Use(authMiddleware.VerifyMiddleware())
 
 	funcMap := template.FuncMap{
 		"toLower": strings.ToLower,
